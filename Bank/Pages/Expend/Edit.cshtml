@@ -1,0 +1,68 @@
+﻿@page
+@using Bank.Models
+@model Bank.Pages.Expend.EditModel
+@{
+    ViewData["Title"] = "Edit";
+
+}
+
+<h3>@ViewData["Title"]</h3>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="Expend.Id" />
+            <div class="form-group">
+                <label asp-for="Expend.TransactionDate" class="control-label"></label>
+                <input asp-for="Expend.TransactionDate" class="form-control" />
+                <span asp-validation-for="Expend.TransactionDate" class="text-danger"></span>
+            </div>
+
+            <!-- Dropdown (only 'Expends'/ 'Income'?) მერე ჩასამატებელი-->
+            <div class="form-group">
+                <label asp-for="Expend.Transaction" class="control-label"></label>
+                <select asp-for="Expend.Transaction" class="form-control">
+                    <option value="Expends">Expends</option>
+                    <!--  <option value="Income">Income</option> ეს მერე ჩავამატოთ-->
+                </select>
+                <span asp-validation-for="Expend.Transaction" class="text-danger"></span>
+            </div>
+
+            <!-- dropdown -->
+            <div class="form-group">
+                <label asp-for="Expend.TransactionCategory" class="control-label"></label>
+                <select asp-for="Expend.TransactionCategory" class="form-control">
+                    @foreach (TransactionCategory category in Enum.GetValues(typeof(TransactionCategory)))
+                    {
+                        <option value="@category">@category.GetDisplayName()</option>
+                    }
+                </select>
+                <span asp-validation-for="Expend.TransactionCategory" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Expend.Description" class="control-label"></label>
+                <input asp-for="Expend.Description" class="form-control" />
+                <span asp-validation-for="Expend.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Expend.Amount" class="control-label"></label>
+                <input asp-for="Expend.Amount" class="form-control" />
+                <span asp-validation-for="Expend.Amount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                <a class="btn btn-success" asp-page="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
